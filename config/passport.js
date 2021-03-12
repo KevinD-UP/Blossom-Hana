@@ -8,22 +8,22 @@ module.exports = function(passport) {
         new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
             database.connect( (err) => {
                 if (err) throw err;
-                database.query("SELECT email FROM users WHERE email='"+email+"'", (err, rows, fields) => {
+                database.query("SELECT * FROM users WHERE email='"+email+"'", async (err, rows, fields) => {
                     if (err) throw err;
-                    if (email === rows[0].email) {
+                    if (rows[0] !== undefined && email === rows[0].email) {
                         // Found user
                         // Match password
                         bcrypt.compare(password, rows[0].password, (err, isMatch) => {
                             if(err) throw err
-
                             if(isMatch){
                                 return done(null, rows[0])
-                            }else{
-                                return done(null, false, {msg: 'Password incorrect'})
+                            } else {
+                                return done(null, false, {message: 'Password incorrect'})
                             }
                         })
+                    } else {
+                        return done(null, false, {message: 'That email is not registered'});
                     }
-                    return done(null, false, {msg: 'That email is not registered'});
                 })
             })
         })

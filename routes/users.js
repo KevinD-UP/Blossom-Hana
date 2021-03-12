@@ -20,7 +20,7 @@ router.post('/register', controllers.registration);
 router.post('/login', controllers.login)
 
 //logout handle
-router.get('logout', controllers.logout)
+router.get('/logout', controllers.logout)
 
 
 module.exports = router;

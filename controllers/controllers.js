@@ -7,7 +7,7 @@ exports.home = (req, res) => {
 }
 
 exports.renderDashboard = (req, res) => {
-    res.render('../views/dashBoard', {
+    res.render('../views/dashboard', {
         name: req.user.name
     })
 }
@@ -52,7 +52,7 @@ exports.registration = (req, res) => {
             if (err) throw err;
             database.query("SELECT email FROM users WHERE email='"+email+"'", (err, rows, fields) => {
                 if(err) throw err;
-                if (email === rows[0].email){
+                if (rows[0] !== undefined && email === rows[0].email){
                     //User already exists
                     errors.push({msg: 'Email is already registered'})
                     res.render('../views/register', {
@@ -71,12 +71,11 @@ exports.registration = (req, res) => {
                             //Save user
                             database.connect((err) => {
                                 if (err) throw err;
-                                const fields = "('" + newUser.email + "','" + newUser.name + "','" + newUser.password + "')"
-                                database.query("INSERT INTO users VALUES " + fields, (err, result) => {
+                                database.query(`INSERT INTO users (email, name, password) VALUES ('${newUser.email}','${newUser.name}','${newUser.password}')`, (err, result) => {
                                     if (err) throw err;
-                                    console.log("1 nouvel utilisateur enregistré")
+                                    console.log("A new user has been registered")
                                     req.flash('success_msg', 'You are now registered and can log in')
-                                    res.redirect('/login')
+                                    res.redirect('/users/login')
                                 })
                             })
                     }))
@@ -89,7 +88,7 @@ exports.registration = (req, res) => {
 exports.login = (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/dashboard',
-        failureRedirect: '/login',
+        failureRedirect: '/users/login',
         failureFlash: true,
     })(req, res, next)
 }
