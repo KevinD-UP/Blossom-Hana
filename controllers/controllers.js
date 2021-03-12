@@ -7,9 +7,14 @@ exports.home = (req, res) => {
 }
 
 exports.renderDashboard = (req, res) => {
-    res.render('../views/dashboard', {
-        name: req.user.name
-    })
+    if(req.user.type === 'client')
+        res.render('../views/dashboardClient', {
+            name: req.user.name
+        })
+    else
+        res.render('../views/dashboardEmployee', {
+            name: req.user.name
+        })
 }
 
 exports.renderLogin = (req, res) => {
@@ -71,7 +76,7 @@ exports.registration = (req, res) => {
                             //Save user
                             database.connect((err) => {
                                 if (err) throw err;
-                                database.query(`INSERT INTO users (email, name, password) VALUES ('${newUser.email}','${newUser.name}','${newUser.password}')`, (err, result) => {
+                                database.query(`INSERT INTO users (email, name, password, type) VALUES ('${newUser.email}','${newUser.name}','${newUser.password}', 'client')`, (err, result) => {
                                     if (err) throw err;
                                     console.log("A new user has been registered")
                                     req.flash('success_msg', 'You are now registered and can log in')
