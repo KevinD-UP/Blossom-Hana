@@ -21,6 +21,10 @@ exports.renderLogin = (req, res) => {
     res.render('../views/login')
 }
 
+exports.renderBuying = (req, res) => {
+    res.render('../views/buying')
+}
+
 exports.register = (req, res) => {
     res.render('../views/register')
 }

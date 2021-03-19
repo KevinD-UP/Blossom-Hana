@@ -22,5 +22,8 @@ router.post('/login', controllers.login)
 //logout handle
 router.get('/logout', controllers.logout)
 
+//Buying page
+router.get('/buying', controllers.renderBuying)
+
 
 module.exports = router;
