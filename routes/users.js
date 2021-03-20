@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 controllers  = require('../controllers/controllers')
+const { ensureAuthenticated } = require('../config/auth')
 
 //default
 router.get('/', (req, res) => {
@@ -23,7 +24,10 @@ router.post('/login', controllers.login)
 router.get('/logout', controllers.logout)
 
 //Buying page
-router.get('/buying', controllers.renderBuying)
+router.get('/purchase', ensureAuthenticated,controllers.renderPurchase)
+
+//Resolve command
+router.post('/resolve', controllers.resolveCommand)
 
 
 module.exports = router;

@@ -21,8 +21,21 @@ exports.renderLogin = (req, res) => {
     res.render('../views/login')
 }
 
-exports.renderBuying = (req, res) => {
-    res.render('../views/buying')
+fetchPersonalizedBouquet = () => {
+    database.connect((err) => {
+        if (err) throw err;
+        database.query("SELECT * FROM bouquet_personalized", (err,  rows, field) => {
+            if(rows === undefined)
+                return []
+            else
+                return rows
+        })
+    })
+}
+
+exports.renderPurchase = (req, res) => {
+    res.render('../views/purchase', { bouquet: fetchPersonalizedBouquet
+    })
 }
 
 exports.register = (req, res) => {
@@ -106,4 +119,9 @@ exports.logout = (req, res) => {
     req.logout();
     req.flash('success_msg', 'You are logged out')
     res.redirect('/users/login')
+}
+
+exports.resolveCommand = (req, res) => {
+    //TODO requete de mise a jour des commandes
+    res.redirect('/users/dashboard')
 }
