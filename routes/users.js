@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 controllers  = require('../controllers/controllers')
-const { ensureAuthenticated } = require('../config/auth')
 
 //default
 router.get('/', (req, res) => {
@@ -22,9 +21,6 @@ router.post('/login', controllers.login)
 
 //logout handle
 router.get('/logout', controllers.logout)
-
-//Buying page
-router.get('/purchase', ensureAuthenticated,controllers.renderPurchase)
 
 //Resolve command
 router.post('/resolve', controllers.resolveCommand)

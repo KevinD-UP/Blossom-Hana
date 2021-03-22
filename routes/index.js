@@ -9,4 +9,7 @@ router.get('/', controllers.home)
 // Dashboard
 router.get('/dashboard', ensureAuthenticated, controllers.renderDashboard)
 
+//Buying page
+router.get('/purchase', ensureAuthenticated, controllers.renderPurchase)
+
 module.exports = router;

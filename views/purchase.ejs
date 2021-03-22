@@ -1,8 +1,43 @@
 <h1 class="mt-4">Purchase</h1>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>
 
-<input type="text" id="js-range-slider" name="my_range" value="" />
-
+<br>
+<br>
 <script>
-    $("#js-range-slider").ionRangeSlider();
+    $( function() {
+        $( "#slider-range" ).slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [ 75, 300 ],
+            slide: (event, ui) => {
+                $( "#amount" ).text( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+            }
+        });
+        $( "#amount" ).text( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+            " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+    } );
 </script>
+
+<div id="slider-range"></div>
+
+<p>
+    <label for="amount">Price range:</label>
+    <strong id="amount"></strong>
+</p>
+
+<div class="predefined-article">
+    <div class="predefine-article-img">
+        <img src="" alt="flower">
+    </div>
+    <div class="info">
+         <h1 class="article-name">
+             Bouquet1
+         </h1>
+        <p class="article-description">
+            BLABLABLABLABLABLABLA
+        </p>
+        <a href="#" class="add-command">Add article</a>
+    </div>
+</div>
+
