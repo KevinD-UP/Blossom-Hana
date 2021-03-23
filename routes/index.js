@@ -12,4 +12,10 @@ router.get('/dashboard', ensureAuthenticated, controllers.renderDashboard)
 //Buying page
 router.get('/purchase', ensureAuthenticated, controllers.renderPurchase)
 
+//Personalize page
+router.get('/customize', ensureAuthenticated, controllers.renderCustomize)
+
+//Cart page
+router.get('/cart', ensureAuthenticated, controllers.renderCart)
+
 module.exports = router;

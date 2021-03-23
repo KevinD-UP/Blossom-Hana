@@ -33,6 +33,14 @@ fetchPersonalizedBouquet = () => {
     })
 }
 
+exports.renderCustomize = (req, res) => {
+    res.render('../views/customize')
+}
+
+exports.renderCart = (req, res) => {
+    res.render('../views/cart')
+}
+
 exports.renderPurchase = (req, res) => {
     res.render('../views/purchase', { bouquet: fetchPersonalizedBouquet
     })
