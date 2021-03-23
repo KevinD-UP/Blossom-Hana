@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 router.get('/login', controllers.renderLogin);
 
 //register page
-router.get('/register', controllers.register);
+router.get('/register', controllers.renderRegister);
 
 //register handle
 router.post('/register', controllers.registration);
@@ -22,8 +22,6 @@ router.post('/login', controllers.login)
 //logout handle
 router.get('/logout', controllers.logout)
 
-//Resolve command
-router.post('/resolve', controllers.resolveCommand)
 
 
 module.exports = router;

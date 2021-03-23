@@ -6,21 +6,6 @@ exports.home = (req, res) => {
     res.render('../views/welcome')
 }
 
-exports.renderDashboard = (req, res) => {
-    if(req.user.type === 'client')
-        res.render('../views/dashboardClient', {
-            name: req.user.name
-        })
-    else
-        res.render('../views/dashboardEmployee', {
-            name: req.user.name
-        })
-}
-
-exports.renderLogin = (req, res) => {
-    res.render('../views/login')
-}
-
 fetchPersonalizedBouquet = () => {
     database.connect((err) => {
         if (err) throw err;
@@ -33,6 +18,22 @@ fetchPersonalizedBouquet = () => {
     })
 }
 
+exports.renderDashboard = (req, res) => {
+    if(req.user.type === 'client')
+        res.render('../views/dashboardClient', {
+            name: req.user.name
+        })
+    else
+        res.render('../views/dashboardEmployee', {
+            name: req.user.name,
+            bouquet: fetchPersonalizedBouquet
+        })
+}
+
+exports.renderLogin = (req, res) => {
+    res.render('../views/login')
+}
+
 exports.renderCustomize = (req, res) => {
     res.render('../views/customize')
 }
@@ -42,11 +43,10 @@ exports.renderCart = (req, res) => {
 }
 
 exports.renderPurchase = (req, res) => {
-    res.render('../views/purchase', { bouquet: fetchPersonalizedBouquet
-    })
+    res.render('../views/purchase')
 }
 
-exports.register = (req, res) => {
+exports.renderRegister = (req, res) => {
     res.render('../views/register')
 }
 
@@ -127,9 +127,4 @@ exports.logout = (req, res) => {
     req.logout();
     req.flash('success_msg', 'You are logged out')
     res.redirect('/users/login')
-}
-
-exports.resolveCommand = (req, res) => {
-    //TODO requete de mise a jour des commandes
-    res.redirect('/users/dashboard')
 }
