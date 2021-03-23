@@ -1,5 +1,33 @@
+<script>
+    const predefinedBouquet = [
+        {
+            id: 0,
+            name: "fleur1",
+            img: "/images/fleur1",
+            price: 30,
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies est felis, non ultricies arcu fermentum quis. Nullam pellentesque augue nulla, sed varius nisi mollis ac."
+        },
+        {
+            id: 1,
+            name: "fleur2",
+            img: "/images/fleur2",
+            price: 50,
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies est felis, non ultricies arcu fermentum quis. Nullam pellentesque augue nulla, sed varius nisi mollis ac."
+        },
+        {
+            id: 2,
+            name: "fleur3",
+            img: "/images/fleur3",
+            price: 100,
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies est felis, non ultricies arcu fermentum quis. Nullam pellentesque augue nulla, sed varius nisi mollis ac."
+        },
+    ]
+</script>
+
+
 <h1 class="mt-4">Purchase</h1>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>
+<a href="/cart" class="btn btn-primary">Shopping Cart</a>
 
 <br>
 <br>
@@ -8,15 +36,25 @@
         $( "#slider-range" ).slider({
             range: true,
             min: 0,
-            max: 500,
-            values: [ 75, 300 ],
+            max: 100,
+            values: [ 0, 100 ],
             slide: (event, ui) => {
                 $( "#amount" ).text( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+                const priceMin = ui.values[0]
+                const priceMax = ui.values[1]
+                predefinedBouquet.forEach((element) => {
+                    if (element.price >= priceMin && element.price <= priceMax){
+                        $('#product'+element.id).fadeIn(500)
+                    }else{
+                        $('#product'+element.id).fadeOut(500)
+                    }
+                })
             }
         });
         $( "#amount" ).text( "$" + $( "#slider-range" ).slider( "values", 0 ) +
             " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-    } );
+    });
+
 </script>
 
 <div id="slider-range"></div>
@@ -26,18 +64,91 @@
     <strong id="amount"></strong>
 </p>
 
-<div class="predefined-article">
-    <div class="predefine-article-img">
-        <img src="" alt="flower">
+<div id="product">
+    <div id="product0">
+        <div class="predefined-article">
+            <div class="predefined-article-img">
+                <img src="/images/fleur1.jpg" alt="flower">
+            </div>
+            <div class="info">
+                <h1 class="article-name">
+                    Personal
+                </h1>
+                <p class="article-description">
+                    Make your own bouquet
+                </p>
+                <p>Price: 30$</p>
+                <a href="/personalize" class="add-command">Add to cart</a>
+            </div>
+        </div>
     </div>
-    <div class="info">
-         <h1 class="article-name">
-             Bouquet1
-         </h1>
-        <p class="article-description">
-            BLABLABLABLABLABLABLA
-        </p>
-        <a href="#" class="add-command">Add article</a>
+    <div id="product1">
+        <div class="predefined-article">
+            <div class="predefined-article-img">
+                <img src="/images/fleur2.jpg" alt="flower">
+            </div>
+            <div class="info">
+                <h1 class="article-name">
+                    Personal
+                </h1>
+                <p class="article-description">
+                    Make your own bouquet
+                </p>
+                <p>Price: 50$</p>
+                <a href="/personalize" class="add-command">Add to cart</a>
+            </div>
+        </div>
+    </div>
+    <div id="product2">
+        <div class="predefined-article">
+            <div class="predefined-article-img">
+                <img src="/images/fleur3.jpg" alt="flower">
+            </div>
+            <div class="info">
+                <h1 class="article-name">
+                    Personal
+                </h1>
+                <p class="article-description">
+                    Make your own bouquet
+                </p>
+                <p>Price: 100$</p>
+                <a href="/personalize" class="add-command">Add to cart</a>
+            </div>
+        </div>
     </div>
 </div>
 
+<div class="predefined-article">
+    <div class="predefined-article-img">
+        <img src="/images/own-illustration.jpg" alt="flower">
+    </div>
+    <div class="info">
+         <h1 class="article-name">
+             Personal
+         </h1>
+        <p class="article-description">
+            Make your own bouquet
+        </p>
+        <a href="/personalize" class="add-command">Go to</a>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function()
+    {
+        $(".predefined-article-img").find("img").css("transition", "transform 500ms ease-in-out");
+
+        $(".predefined-article-img").hover(
+            // Handler for mouseenter
+            function()
+            {
+                $(this).find("img").css("transform", "scale(1.2)");
+            },
+            // Handler for mouseleave
+            function()
+            {
+                $(this).find("img").css("transform", "scale(1)");
+            }
+        );
+    });
+</script>
