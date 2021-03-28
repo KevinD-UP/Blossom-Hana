@@ -34,7 +34,6 @@
                 bouquet.description +
                 "</p>" +
                 "<p>" + "Price: "+ bouquet.price + "$" + "</p>" +
-                "<button type=submit class=add-command value="+bouquet.idBouquet+" onclick=addProduct(this.value)>Add to cart</button>"+
                 "</div>"+
                 "</div>" +
                 "</div>"
@@ -43,3 +42,23 @@
 </div>
 
 <a href="/users/resolve" class="btn btn-primary">Resolve the command</a>
+
+<script>
+    $(document).ready(function()
+    {
+        $(".predefined-article-img").find("img").css("transition", "transform 500ms ease-in-out");
+
+        $(".predefined-article-img").hover(
+            // Handler for mouseenter
+            function()
+            {
+                $(this).find("img").css("transform", "scale(1.2)");
+            },
+            // Handler for mouseleave
+            function()
+            {
+                $(this).find("img").css("transform", "scale(1)");
+            }
+        );
+    });
+</script>
