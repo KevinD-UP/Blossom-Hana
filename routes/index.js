@@ -11,11 +11,16 @@ router.get('/dashboard', ensureAuthenticated, controllers.renderDashboard)
 
 //Buying page
 router.get('/purchase', ensureAuthenticated, controllers.renderPurchase)
+router.post('/purchase', ensureAuthenticated, controllers.addCommand)
 
 //Personalize page
 router.get('/customize', ensureAuthenticated, controllers.renderCustomize)
 
 //Cart page
 router.get('/cart', ensureAuthenticated, controllers.renderCart)
+
+//Payment page
+router.get('/payment', controllers.renderPayment)
+router.post('/payment', controllers.resolveCommand)
 
 module.exports = router;

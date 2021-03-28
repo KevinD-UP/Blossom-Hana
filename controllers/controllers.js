@@ -6,18 +6,6 @@ exports.home = (req, res) => {
     res.render('../views/welcome')
 }
 
-fetchPersonalizedBouquet = () => {
-    database.connect((err) => {
-        if (err) throw err;
-        database.query("SELECT * FROM bouquet_personalized", (err,  rows, field) => {
-            if(rows === undefined)
-                return []
-            else
-                return rows
-        })
-    })
-}
-
 exports.renderDashboard = (req, res) => {
     if(req.user.type === 'client')
         res.render('../views/dashboardClient', {
@@ -25,8 +13,7 @@ exports.renderDashboard = (req, res) => {
         })
     else
         res.render('../views/dashboardEmployee', {
-            name: req.user.name,
-            bouquet: fetchPersonalizedBouquet
+            name: req.user.name
         })
 }
 
@@ -39,15 +26,35 @@ exports.renderCustomize = (req, res) => {
 }
 
 exports.renderCart = (req, res) => {
-    res.render('../views/cart')
+    database.connect(err => {
+        if(err) throw err
+        database.query(`SELECT * FROM bouquets, ordered WHERE ordered.idUser=${req.user.id} AND bouquets.idBouquet=ordered.idBouquet`, (err, rows, fields) => {
+            if(err) throw err
+            res.render('../views/cart', {
+                cart: rows
+            })
+        })
+    })
 }
 
 exports.renderPurchase = (req, res) => {
-    res.render('../views/purchase')
+    database.connect(err => {
+        if(err) throw err
+        database.query("SELECT * FROM bouquets WHERE isPredefined="+true, (err, rows, fields) => {
+            if(err) throw err
+            res.render('../views/purchase', {
+                bouquets: rows
+            })
+        })
+    })
 }
 
 exports.renderRegister = (req, res) => {
     res.render('../views/register')
+}
+
+exports.renderPayment = (req, res) => {
+    res.render('../views/payment')
 }
 
 exports.registration = (req, res) => {
@@ -127,4 +134,21 @@ exports.logout = (req, res) => {
     req.logout();
     req.flash('success_msg', 'You are logged out')
     res.redirect('/users/login')
+}
+
+exports.addCommand = (req, res) => {
+    database.connect(err => {
+        if(err) throw err
+        let idBouquet = req.body.idBouquet
+        let idUser = req.user.id
+        database.query(`INSERT INTO ordered (idBouquet, idUser, date) VALUES (${idBouquet},${idUser}, CURDATE())`)
+    })
+}
+
+exports.resolveCommand = (req, res) => {
+    database.connect(err => {
+        if(err) throw err
+        database.query(`DELETE FROM ordered WHERE idUser=${req.user.id}`)
+        res.redirect('/dashboard')
+    })
 }

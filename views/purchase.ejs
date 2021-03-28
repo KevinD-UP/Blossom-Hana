@@ -1,29 +1,6 @@
 <script>
-    const predefinedBouquet = [
-        {
-            id: 0,
-            name: "fleur1",
-            img: "/images/fleur1",
-            price: 30,
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies est felis, non ultricies arcu fermentum quis. Nullam pellentesque augue nulla, sed varius nisi mollis ac."
-        },
-        {
-            id: 1,
-            name: "fleur2",
-            img: "/images/fleur2",
-            price: 50,
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies est felis, non ultricies arcu fermentum quis. Nullam pellentesque augue nulla, sed varius nisi mollis ac."
-        },
-        {
-            id: 2,
-            name: "fleur3",
-            img: "/images/fleur3",
-            price: 100,
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies est felis, non ultricies arcu fermentum quis. Nullam pellentesque augue nulla, sed varius nisi mollis ac."
-        },
-    ]
+    const predefinedBouquet = <%- JSON.stringify(bouquets)%>
 </script>
-
 
 <h1 class="mt-4">Purchase</h1>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>
@@ -44,9 +21,9 @@
                 const priceMax = ui.values[1]
                 predefinedBouquet.forEach((element) => {
                     if (element.price >= priceMin && element.price <= priceMax){
-                        $('#product'+element.id).fadeIn(500)
+                        $('#product'+element.idBouquet).fadeIn(500)
                     }else{
-                        $('#product'+element.id).fadeOut(500)
+                        $('#product'+element.idBouquet).fadeOut(500)
                     }
                 })
             }
@@ -65,57 +42,37 @@
 </p>
 
 <div id="product">
-    <div id="product0">
-        <div class="predefined-article">
-            <div class="predefined-article-img">
-                <img src="/images/fleur1.jpg" alt="flower">
-            </div>
-            <div class="info">
-                <h1 class="article-name">
-                    Personal
-                </h1>
-                <p class="article-description">
-                    Make your own bouquet
-                </p>
-                <p>Price: 30$</p>
-                <a href="/personalize" class="add-command">Add to cart</a>
-            </div>
-        </div>
-    </div>
-    <div id="product1">
-        <div class="predefined-article">
-            <div class="predefined-article-img">
-                <img src="/images/fleur2.jpg" alt="flower">
-            </div>
-            <div class="info">
-                <h1 class="article-name">
-                    Personal
-                </h1>
-                <p class="article-description">
-                    Make your own bouquet
-                </p>
-                <p>Price: 50$</p>
-                <a href="/personalize" class="add-command">Add to cart</a>
-            </div>
-        </div>
-    </div>
-    <div id="product2">
-        <div class="predefined-article">
-            <div class="predefined-article-img">
-                <img src="/images/fleur3.jpg" alt="flower">
-            </div>
-            <div class="info">
-                <h1 class="article-name">
-                    Personal
-                </h1>
-                <p class="article-description">
-                    Make your own bouquet
-                </p>
-                <p>Price: 100$</p>
-                <a href="/customize" class="add-command">Add to cart</a>
-            </div>
-        </div>
-    </div>
+    <script>
+        addProduct = (idBouquet) => {
+            $.post("/purchase", {idBouquet: idBouquet}, () => {})
+            swal({
+                text: 'Article added to cart successfully',
+                icon: 'success',
+                button: 'Ok'
+            })
+        }
+
+        predefinedBouquet.forEach((bouquet) => {
+            document.getElementById("product").innerHTML +=
+                "<div id=product"+bouquet.idBouquet+">"+
+                    "<div class=predefined-article>"+
+                    "<div class=predefined-article-img>"+
+                "<img src="+bouquet.image+" alt=flower>"+
+                "</div>"+
+                "<div class=info>"+
+                "<h1 class=article-name>"+
+                    bouquet.name +
+                "</h1>" +
+                "<p class=article-description>" +
+                    bouquet.description +
+                "</p>" +
+                "<p>" + "Price: "+ bouquet.price + "$" + "</p>" +
+                "<button type=submit class=add-command value="+bouquet.idBouquet+" onclick=addProduct(this.value)>Add to cart</button>"+
+            "</div>"+
+        "</div>" +
+        "</div>"
+        })
+    </script>
 </div>
 
 <div class="predefined-article">
