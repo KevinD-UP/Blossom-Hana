@@ -25,4 +25,7 @@ router.post('/cart', ensureAuthenticated, controllers.deleteCommand)
 router.get('/payment', controllers.renderPayment)
 router.post('/payment', controllers.resolveCommand)
 
+//About page
+router.get('/about', controllers.renderAbout)
+
 module.exports = router;

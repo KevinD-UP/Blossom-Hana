@@ -32,6 +32,10 @@ exports.renderCustomize = (req, res) => {
     res.render('../views/customize')
 }
 
+exports.renderAbout = (req, res) => {
+    res.render('../views/about')
+}
+
 exports.renderCart = (req, res) => {
     database.connect(err => {
         if(err) throw err

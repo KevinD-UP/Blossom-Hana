@@ -9,12 +9,51 @@
     }
 </script>
 
+<nav class="navbar">
+    <div id="trapezoid">
+        <a class="sub-home" href="/dashboard">Dashboard</a>
+        <a href="/dashboard" class="expandHome">Home</a>
+        <div class="subnav">
+            <button class="subnavbtn">Clients<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <div id="subnav-trapezoid">
+                    <a href="/purchase">Purchase</a>
+                    <a href="/cart">Cart</a>
+                </div>
+            </div>
+        </div>
+        <a href="/about">About</a>
+        <a href="/users/logout">Logout</a>
+    </div>
+</nav>
+
+
 <h1 class="mt-4">Payment board</h1>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
-
-<br>
-<br>
-
-<h1>Please click on this button to validate your payment, this cannot be undone</h1>
 
 <button class="btn btn-primary" value="data" onClick="validate()">Proceed to payment</button>
+
+<script>
+    $('.expandHome').mouseover(function() {
+        $('.sub-home').css({
+            'display': 'block'
+        });
+    });
+    $('.subnavbtn').mouseover(function() {
+        $('.sub-home').css({
+            'display': 'none'
+        });
+    });
+
+    $('#trapezoid').mouseleave(function() {
+        $('#trapezoid').css({
+            'margin-top': '-53px'
+        });
+        $('.sub-home').css({
+            'display': 'none'
+        });
+    }).mouseenter(function() {
+        $('#trapezoid').css({
+            'margin-top': '0px'
+        });
+    });
+</script>

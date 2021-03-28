@@ -1,6 +1,22 @@
+<nav class="navbar">
+    <div id="trapezoid">
+        <a class="sub-home" href="/dashboard">Dashboard</a>
+        <a href="/dashboard" class="expandHome">Home</a>
+        <div class="subnav">
+            <button class="subnavbtn">Clients<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <div id="subnav-trapezoid">
+                    <a href="/purchase">Purchase</a>
+                    <a href="/cart">Cart</a>
+                </div>
+            </div>
+        </div>
+        <a href="/about">About</a>
+        <a href="/users/logout">Logout</a>
+    </div>
+</nav>
 <h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= name %> (client)</p>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
+<p class="lead mb-3">Welcome <%= name %></p>
 
 <!--image slider start -->
 <div class="slider">
@@ -44,10 +60,6 @@
     <!-- manual navigation end-->
 </div>
 
-<br>
-
-<a href="/purchase" class="btn btn-primary">Purchase</a>
-
 <script type="text/javascript">
     let counter = 1;
     setInterval(() => {
@@ -57,4 +69,28 @@
             counter = 1
         }
     }, 5000)
+
+    $('.expandHome').mouseover(function() {
+        $('.sub-home').css({
+            'display': 'block'
+        });
+    });
+    $('.subnavbtn').mouseover(function() {
+        $('.sub-home').css({
+            'display': 'none'
+        });
+    });
+
+    $('#trapezoid').mouseleave(function() {
+        $('#trapezoid').css({
+            'margin-top': '-53px'
+        });
+        $('.sub-home').css({
+            'display': 'none'
+        });
+    }).mouseenter(function() {
+        $('#trapezoid').css({
+            'margin-top': '0px'
+        });
+    });
 </script>
