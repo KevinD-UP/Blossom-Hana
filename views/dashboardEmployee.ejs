@@ -1,9 +1,45 @@
+<script>
+    const customBouquet = <%- JSON.stringify(bouquets)%>
+</script>
+
 <h1 class="mt-4">Dashboard</h1>
 <p class="lead mb-3">Welcome <%= name %> (Employee)</p>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>
 
-<div>
-    <p>affichage de commande</p>
+<div id="product">
+    <script>
+        addProduct = (idBouquet) => {
+            $.post("/dashboardEmployee", {idBouquet: idBouquet}, () => {})
+            swal({
+                text: 'Command Resolved',
+                icon: 'success',
+                button: 'Ok'
+            }).then(function(){
+                location.reload();
+            })
+        }
+
+        customBouquet.forEach((bouquet) => {
+            document.getElementById("product").innerHTML +=
+                "<div id=product"+bouquet.idBouquet+">"+
+                "<div class=predefined-article>"+
+                "<div class=predefined-article-img>"+
+                "<img src="+bouquet.image+" alt=flower>"+
+                "</div>"+
+                "<div class=info>"+
+                "<h1 class=article-name>"+
+                bouquet.name +
+                "</h1>" +
+                "<p class=article-description>" +
+                bouquet.description +
+                "</p>" +
+                "<p>" + "Price: "+ bouquet.price + "$" + "</p>" +
+                "<button type=submit class=add-command value="+bouquet.idBouquet+" onclick=addProduct(this.value)>Add to cart</button>"+
+                "</div>"+
+                "</div>" +
+                "</div>"
+        })
+    </script>
 </div>
 
 <a href="/users/resolve" class="btn btn-primary">Resolve the command</a>

@@ -11,10 +11,17 @@ exports.renderDashboard = (req, res) => {
         res.render('../views/dashboardClient', {
             name: req.user.name
         })
-    else
-        res.render('../views/dashboardEmployee', {
-            name: req.user.name
+    else {
+        database.connect((err) => {
+            if(err) throw err
+            database.query(`SELECT * FROM bouquets WHERE isCompleted=false`, (err, rows, fields) => {
+                res.render('../views/dashboardEmployee', {
+                    name: req.user.name,
+                    bouquets: rows
+                })
+            })
         })
+    }
 }
 
 exports.renderLogin = (req, res) => {
@@ -167,5 +174,12 @@ exports.addCustomBouquet = (req, res) => {
         let price = 0;
         database.query(`INSERT INTO bouquets (name, description, price, isPredefined, isCompleted) 
         VALUES (${req.body.name}, ${req.body.description}, ${price}, false, false)`)
+    })
+}
+
+exports.resolveCustom = (req, res) => {
+    database.connect((err)=> {
+        if(err) throw err
+        database.query(`UPDATE bouquets SET isCompleted=true WHERE idBouquet=${req.body.idBouquet}`)
     })
 }

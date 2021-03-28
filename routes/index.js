@@ -8,6 +8,7 @@ router.get('/', controllers.home)
 
 // Dashboard
 router.get('/dashboard', ensureAuthenticated, controllers.renderDashboard)
+router.post('/dashboardEmployee', ensureAuthenticated, controllers.resolveCustom)
 
 //Buying page
 router.get('/purchase', ensureAuthenticated, controllers.renderPurchase)
