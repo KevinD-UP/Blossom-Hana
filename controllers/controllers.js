@@ -148,6 +148,8 @@ exports.addCommand = (req, res) => {
 exports.resolveCommand = (req, res) => {
     database.connect(err => {
         if(err) throw err
+        database.query(`DELETE FROM bouquets, ordered 
+            WHERE ordered.idUser=${req.user.id} AND ordered.idBouquet=bouquets.idBouquets AND isPredefined=false`)
         database.query(`DELETE FROM ordered WHERE idUser=${req.user.id}`)
     })
 }
@@ -156,5 +158,14 @@ exports.deleteCommand = (req, res) => {
     database.connect ((err) => {
         if(err) throw err
         database.query(`DELETE FROM ordered WHERE idUser=${req.user.id} AND idBouquet=${req.body.idBouquet}`)
+    })
+}
+
+exports.addCustomBouquet = (req, res) => {
+    database.connect((err)=> {
+        if(err) throw err
+        let price = 0;
+        database.query(`INSERT INTO bouquets (name, description, price, isPredefined, isCompleted) 
+        VALUES (${req.body.name}, ${req.body.description}, ${price}, false, false)`)
     })
 }
