@@ -18,6 +18,7 @@ router.get('/customize', ensureAuthenticated, controllers.renderCustomize)
 
 //Cart page
 router.get('/cart', ensureAuthenticated, controllers.renderCart)
+router.post('/cart', ensureAuthenticated, controllers.deleteCommand)
 
 //Payment page
 router.get('/payment', controllers.renderPayment)

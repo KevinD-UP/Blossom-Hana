@@ -149,6 +149,12 @@ exports.resolveCommand = (req, res) => {
     database.connect(err => {
         if(err) throw err
         database.query(`DELETE FROM ordered WHERE idUser=${req.user.id}`)
-        res.redirect('/dashboard')
+    })
+}
+
+exports.deleteCommand = (req, res) => {
+    database.connect ((err) => {
+        if(err) throw err
+        database.query(`DELETE FROM ordered WHERE idUser=${req.user.id} AND idBouquet=${req.body.idBouquet}`)
     })
 }

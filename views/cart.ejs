@@ -6,6 +6,18 @@
         totalPrice+=bouquet.price
     })
 
+    deleteCommand = (idBouquet) => {
+        $.post("/cart", {idBouquet: idBouquet}, () => {})
+        swal({
+            text: 'Article deleted successfully',
+            icon: 'success',
+            button: 'Ok',
+            type: "success"
+        }).then(function(){
+                location.reload();
+        })
+    }
+
 </script>
 
 <h1 class="mt-4">Cart</h1>
@@ -38,6 +50,8 @@
                             "</p>" +
                             "<p>" + "Price: "+ bouquet.price + "$" + "</p>" +
                             "<strong>" + bouquet.isCompleted + "</strong>" +
+                            "<br>" +
+                            "<button type=submit class=add-command value="+bouquet.idBouquet+" onclick=deleteCommand(this.value)>Delete</button>"+
                         "</div>"+
                     "</div>" +
                 "</div>"
