@@ -159,9 +159,7 @@ exports.addCommand = (req, res) => {
 exports.resolveCommand = (req, res) => {
     database.connect(err => {
         if(err) throw err
-        database.query(`DELETE FROM bouquets, ordered 
-            WHERE ordered.idUser=${req.user.id} AND ordered.idBouquet=bouquets.idBouquets AND isPredefined=false`)
-        database.query(`DELETE FROM ordered WHERE idUser=${req.user.id}`)
+        database.query(`UPDATE ordered SET status=true WHERE idUser=${req.user.id}`, )
     })
 }
 
@@ -175,9 +173,13 @@ exports.deleteCommand = (req, res) => {
 exports.addCustomBouquet = (req, res) => {
     database.connect((err)=> {
         if(err) throw err
-        let price = 0;
-        database.query(`INSERT INTO bouquets (name, description, price, isPredefined, isCompleted) 
-        VALUES (${req.body.name}, ${req.body.description}, ${price}, false, false)`)
+        database.query(`INSERT INTO bouquets (name, price, description, isPredefined, isCompleted) 
+        VALUES (${req.body.name}, ${description} ,${req.body.price}, false, false)`, (err, result) => {
+            if(err) throw err
+            database.query(`SELECT idBouquet FROM bouquet WHERE name=${req.body.name} AND description=${description} AND price=${req.body.price}`, (err, rows, fields) => {
+                database.query(`INSERT INTO ordered (idUser, idBouquet, date, status) VALUE (${req.user.id}, ${rows[0].idBouquet},CURDATE(), false)`)
+            })
+        })
     })
 }
 
