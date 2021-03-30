@@ -14,8 +14,9 @@ router.post('/dashboardEmployee', ensureAuthenticated, controllers.resolveCustom
 router.get('/purchase', ensureAuthenticated, controllers.renderPurchase)
 router.post('/purchase', ensureAuthenticated, controllers.addCommand)
 
-//Personalize page
+//Customize page
 router.get('/customize', ensureAuthenticated, controllers.renderCustomize)
+router.post('/customize', ensureAuthenticated, controllers.addCustomBouquet)
 
 //Cart page
 router.get('/cart', ensureAuthenticated, controllers.renderCart)

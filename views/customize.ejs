@@ -1,39 +1,108 @@
 <script>
     let price = 0;
+
+    const data = <%- JSON.stringify(flowers) %>;
+
+    addCustomBouquet = () => {
+        let name = $("#name").val()
+        let description = "This is one of your custom bouquet"
+        $.post("/customize", {name: name, description: description, price: price}, () => {})
+        swal({
+            text: 'Your custom bouquet has been added to cart successfully',
+            icon: 'success',
+            button: 'Ok'
+        })
+    }
+
 </script>
 
+<nav class="navbar">
+    <div id="trapezoid">
+        <a class="sub-home" href="/dashboard">Dashboard</a>
+        <a href="/dashboard" class="expandHome">Home</a>
+        <div class="subnav">
+            <button class="subnavbtn">Clients<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <div id="subnav-trapezoid">
+                    <a href="/purchase">Purchase</a>
+                    <a href="/cart">Cart</a>
+                </div>
+            </div>
+        </div>
+        <a href="/about">About</a>
+        <a href="/users/logout">Logout</a>
+    </div>
+</nav>
+
 <h1 class="mt-4">Customize</h1>
-<a href="/users/logout" class="btn btn-secondary">Logout</a>
+
+<p>
+    <label for="amount">Total Price :</label>
+    <strong id="amount"> 0$
+    </strong>
+</p>
 
 <div class="row mt-5">
-    <div class="col-md-6 m-auto">
-        <div class="card card-body">
-            <%- include('./partials/messages') %>
-            <form action="/customize" method="POST">
-                <div class="form-group">
-                    <label for="email">Name</label>
-                    <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            class="form-control"
-                            placeholder="Enter Name"
-                            required
-                    />
-                </div>
-                <div class="form-group">
-                    <label for="flower1">Flower 1
-                        <input type="number" name="flower1" value="0">
-                    </label>
-                    <label for="flower1">Flower 2
-                        <input type="number" name="flower2" value="0">
-                    </label>
-                    <label for="flower1">Flower 3
-                        <input type="number" name="flower3" value="0">
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Submit</button>
-            </form>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form-control"
+                    placeholder="Enter Name"
+                    required
+            />
         </div>
-    </div>
+        <div class="form-group">
+            <div id="flower">
+                <script>
+                    data.forEach((flower) => {
+                        document.getElementById("flower").innerHTML+=
+                        "<label for="+flower.name+"> "+flower.name +
+                            "<img class=flower-image src="+flower.image+">" +
+                            "<input type=number class=count_flower name="+flower.name+" min=0 value=0>"+
+                            "Price : "+flower.price+"$"
+                        "</label>"
+                    })
+                </script>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" onClick="addCustomBouquet()">Submit</button>
 </div>
+
+<script>
+    $('.count_flower').blur(function () {
+        price = 0;
+        $('.count_flower').each(function() {
+            price += Number($(this).val()) * data.find((flower)=> {
+                return flower.name === $(this).attr('name')
+        }).price
+            $("#amount").text(price + "$")
+        })
+    })
+
+    $('.expandHome').mouseover(function() {
+        $('.sub-home').css({
+            'display': 'block'
+        });
+    });
+    $('.subnavbtn').mouseover(function() {
+        $('.sub-home').css({
+            'display': 'none'
+        });
+    });
+
+    $('#trapezoid').mouseleave(function() {
+        $('#trapezoid').css({
+            'margin-top': '-53px'
+        });
+        $('.sub-home').css({
+            'display': 'none'
+        });
+    }).mouseenter(function() {
+        $('#trapezoid').css({
+            'margin-top': '0px'
+        });
+    });
+</script>

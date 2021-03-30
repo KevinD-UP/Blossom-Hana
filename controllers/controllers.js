@@ -2,8 +2,15 @@ const database = require('../config/database')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
 
+//==================================================================================
+//=================== RENDER PAGE ==================================================
+//==================================================================================
 exports.home = (req, res) => {
     res.render('../views/welcome')
+}
+
+exports.renderOrdered = (req, res) => {
+    res.render('../views/ordered')
 }
 
 exports.renderDashboard = (req, res) => {
@@ -14,7 +21,7 @@ exports.renderDashboard = (req, res) => {
     else {
         database.connect((err) => {
             if(err) throw err
-            database.query(`SELECT * FROM bouquets WHERE isCompleted=false`, (err, rows, fields) => {
+            database.query(`SELECT * FROM bouquets, ordered WHERE isCompleted=false AND status=true`, (err, rows, fields) => {
                 res.render('../views/dashboardEmployee', {
                     name: req.user.name,
                     bouquets: rows
@@ -29,7 +36,15 @@ exports.renderLogin = (req, res) => {
 }
 
 exports.renderCustomize = (req, res) => {
-    res.render('../views/customize')
+    database.connect(err => {
+        if(err) throw err
+        database.query(`SELECT * FROM flowers`, (err, rows, fields) => {
+            if(err) throw err
+            res.render('../views/customize', {
+                flowers: rows
+            })
+        })
+    })
 }
 
 exports.renderAbout = (req, res) => {
@@ -68,6 +83,11 @@ exports.renderPayment = (req, res) => {
     res.render('../views/payment')
 }
 
+//==================================================================================
+//=================== FUNCTIONALITY ================================================
+//==================================================================================
+
+//Registration function
 exports.registration = (req, res) => {
     const { name, email, password, password2 } = req.body
     let errors = []
@@ -87,6 +107,7 @@ exports.registration = (req, res) => {
         errors.push({msg: 'Password should be a least 6 characters'})
     }
 
+    //If there is an error
     if(errors.length > 0){
         res.render('../views/register', {
             errors,
@@ -152,7 +173,7 @@ exports.addCommand = (req, res) => {
         if(err) throw err
         let idBouquet = req.body.idBouquet
         let idUser = req.user.id
-        database.query(`INSERT INTO ordered (idBouquet, idUser, date) VALUES (${idBouquet},${idUser}, CURDATE())`)
+        database.query(`INSERT INTO ordered (idBouquet, idUser, date, status) VALUES (${idBouquet},${idUser}, CURDATE(), false)`)
     })
 }
 
@@ -171,13 +192,15 @@ exports.deleteCommand = (req, res) => {
 }
 
 exports.addCustomBouquet = (req, res) => {
+
+   const {name, description, price} = req.body
     database.connect((err)=> {
         if(err) throw err
-        database.query(`INSERT INTO bouquets (name, price, description, isPredefined, isCompleted) 
-        VALUES (${req.body.name}, ${description} ,${req.body.price}, false, false)`, (err, result) => {
+        database.query(`INSERT INTO bouquets (name, image, description, price, isPredefined, isCompleted) VALUES ('${name}', '/images/custom.jpg', '${description}', ${price}, false, false)`, (err, result) => {
             if(err) throw err
-            database.query(`SELECT idBouquet FROM bouquet WHERE name=${req.body.name} AND description=${description} AND price=${req.body.price}`, (err, rows, fields) => {
-                database.query(`INSERT INTO ordered (idUser, idBouquet, date, status) VALUE (${req.user.id}, ${rows[0].idBouquet},CURDATE(), false)`)
+            database.query(`SELECT idBouquet FROM bouquets WHERE name='${name}' AND description='${description}' AND price=${price}`, (err, rows, fields) => {
+                if(err) throw err
+                database.query(`INSERT INTO ordered (idUser, idBouquet, date, status) VALUE (${req.user.id}, ${rows[0].idBouquet}, CURDATE(), false)`)
             })
         })
     })

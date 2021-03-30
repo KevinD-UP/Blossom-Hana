@@ -373,3 +373,8 @@ p {
 hr {
     background-color: #000;
 }
+
+.flower-image{
+    height: 200px;
+    width: 200px;
+}
