@@ -1,7 +1,8 @@
 <script>
-    const predefinedBouquet = <%- JSON.stringify(bouquets)%>
+    const predefinedBouquet = <%- JSON.stringify(bouquets)%> //Data containing all predefined bouquet
 </script>
 
+<!-- navbar start -->
 <nav class="navbar">
     <div id="trapezoid">
         <a class="sub-home" href="/dashboard">Dashboard</a>
@@ -20,6 +21,7 @@
         <a href="/users/logout">Logout</a>
     </div>
 </nav>
+<!-- navbar end -->
 
 <h1 class="mt-4">Purchase</h1>
 
@@ -32,7 +34,7 @@
             min: 0,
             max: 100,
             values: [ 0, 100 ],
-            slide: (event, ui) => {
+            slide: (event, ui) => { //Show or hide bouquet with price interval
                 $( "#amount" ).text( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
                 const priceMin = ui.values[0]
                 const priceMax = ui.values[1]
@@ -45,21 +47,26 @@
                 })
             }
         });
+        //Print min and max price
         $( "#amount" ).text( "$" + $( "#slider-range" ).slider( "values", 0 ) +
             " - $" + $( "#slider-range" ).slider( "values", 1 ) );
     });
 
 </script>
 
+<!-- Price Slider -->
 <div id="slider-range"></div>
 
+<!-- Price text -->
 <p>
     <label for="amount">Price range:</label>
     <strong id="amount"></strong>
 </p>
 
+<!-- List of predefined bouquet start -->
 <div id="product">
     <script>
+        //Add product to cart function
         addProduct = (idBouquet) => {
             $.post("/purchase", {idBouquet: idBouquet}, () => {})
             swal({
@@ -73,25 +80,24 @@
             document.getElementById("product").innerHTML +=
                 "<div id=product"+bouquet.idBouquet+">"+
                     "<div class=predefined-article>"+
-                    "<div class=predefined-article-img>"+
-                "<img src="+bouquet.image+" alt=flower>"+
-                "</div>"+
-                "<div class=info>"+
-                "<h1 class=article-name>"+
-                    bouquet.name +
-                "</h1>" +
-                "<p class=article-description>" +
-                    bouquet.description +
-                "</p>" +
-                "<p>" + "Price: "+ bouquet.price + "$" + "</p>" +
-                "<button type=submit class=add-command value="+bouquet.idBouquet+" onclick=addProduct(this.value)>Add to cart</button>"+
-            "</div>"+
-        "</div>" +
-        "</div>"
+                        "<div class=predefined-article-img>"+
+                            "<img src="+bouquet.image+" alt=flower>"+
+                        "</div>"+
+                        "<div class=info>"+
+                            "<h1 class=article-name>"+ bouquet.name + "</h1>" +
+                            "<p class=article-description>" + bouquet.description + "</p>" +
+                            "<p>" + "Price: "+ bouquet.price + "$" + "</p>" +
+                            "<button type=submit class=add-command value="+bouquet.idBouquet+" onclick=addProduct(this.value)>Add to cart</button>"+
+                        "</div>"+
+                    "</div>" +
+                "</div>"
         })
     </script>
 </div>
 
+<!-- List of predefined bouquet end -->
+
+<!-- Custom option start -->
 <div class="predefined-article">
     <div class="predefined-article-img">
         <img src="/images/own-illustration.jpg" alt="flower">
@@ -106,6 +112,7 @@
         <a href="/customize" class="add-command">Go to</a>
     </div>
 </div>
+<!-- Custom option end -->
 
 <script>
     $(document).ready(function()

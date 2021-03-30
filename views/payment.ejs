@@ -1,5 +1,5 @@
 <script>
-    validate = () => {
+    validate = () => { //Validate and pay the cart
         $.post("/payment", {}, () => {})
         swal({
             text: 'Your command has been resolved',
@@ -9,6 +9,7 @@
     }
 </script>
 
+<!-- navbar start -->
 <nav class="navbar">
     <div id="trapezoid">
         <a class="sub-home" href="/dashboard">Dashboard</a>
@@ -27,7 +28,7 @@
         <a href="/users/logout">Logout</a>
     </div>
 </nav>
-
+<!-- navbar end -->
 
 <h1 class="mt-4">Payment board</h1>
 

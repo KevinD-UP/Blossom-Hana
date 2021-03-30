@@ -1,12 +1,13 @@
 <script>
-    let totalPrice = 0;
-    const data = <%- JSON.stringify(cart) %>;
+    let totalPrice = 0; //total price of the cart
 
-    data.forEach((bouquet) => {
+    const data = <%- JSON.stringify(cart) %>; //Data containing all the bouquets that have been added to cart
+
+    data.forEach((bouquet) => { //Sum the price of each bouquet
         totalPrice+=bouquet.price
     })
 
-    deleteCommand = (idBouquet) => {
+    deleteCommand = (idBouquet) => { //Delete command function
         $.post("/cart", {idBouquet: idBouquet}, () => {})
         swal({
             text: 'Article deleted successfully',
@@ -17,9 +18,9 @@
                 location.reload();
         })
     }
-
 </script>
 
+<!-- navbar start -->
 <nav class="navbar">
     <div id="trapezoid">
         <a class="sub-home" href="/dashboard">Dashboard</a>
@@ -38,6 +39,7 @@
         <a href="/users/logout">Logout</a>
     </div>
 </nav>
+<!-- navbar end -->
 
 
 <h1 class="mt-4">Cart</h1>
@@ -52,6 +54,8 @@
     <strong id="amount"> <script>document.getElementById("amount").innerHTML += totalPrice + "$"</script>
     </strong>
 </p>
+
+<!-- List of all bouquet of the cart start -->
 <div id="product">
     <script>
         data.forEach((bouquet) => {
@@ -62,14 +66,9 @@
                             "<img src="+bouquet.image+" alt=flower>"+
                         "</div>"+
                         "<div class=info>"+
-                            "<h1 class=article-name>"+
-                            bouquet.name +
-                            "</h1>" +
-                            "<p class=article-description>" +
-                            bouquet.description +
-                            "</p>" +
+                            "<h1 class=article-name>"+ bouquet.name + "</h1>" +
+                            "<p class=article-description>" + bouquet.description + "</p>" +
                             "<p>" + "Price: "+ bouquet.price + "$" + "</p>" +
-                            "<br>" +
                             "<button type=submit class=add-command value="+bouquet.idBouquet+" onclick=deleteCommand(this.value)>Delete</button>"+
                         "</div>"+
                     "</div>" +
@@ -77,6 +76,7 @@
         })
     </script>
 </div>
+<!-- List of all bouquet of the cart end -->
 
 <script>
     $(document).ready(function()

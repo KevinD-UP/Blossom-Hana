@@ -1,11 +1,11 @@
 <script>
-    let price = 0;
+    let price = 0; //Price of the custom bouquet
 
-    const data = <%- JSON.stringify(flowers) %>;
+    const data = <%- JSON.stringify(flowers) %>; //Data containing all the flower
 
-    addCustomBouquet = () => {
+    addCustomBouquet = () => { //Add Custom bouquet to table bouquet and ordered
         let name = $("#name").val()
-        let description = "This is one of your custom bouquet"
+        let description = "This is one of your custom bouquet" //TODO: description personnalisé
         $.post("/customize", {name: name, description: description, price: price}, () => {})
         swal({
             text: 'Your custom bouquet has been added to cart successfully',
@@ -13,9 +13,9 @@
             button: 'Ok'
         })
     }
-
 </script>
 
+<!-- navbar start -->
 <nav class="navbar">
     <div id="trapezoid">
         <a class="sub-home" href="/dashboard">Dashboard</a>
@@ -34,6 +34,7 @@
         <a href="/users/logout">Logout</a>
     </div>
 </nav>
+<!-- navbar end -->
 
 <h1 class="mt-4">Customize</h1>
 
@@ -60,11 +61,11 @@
                 <script>
                     data.forEach((flower) => {
                         document.getElementById("flower").innerHTML+=
+                        "<img class=flower-image src="+flower.image+">" +
                         "<label for="+flower.name+"> "+flower.name +
-                            "<img class=flower-image src="+flower.image+">" +
                             "<input type=number class=count_flower name="+flower.name+" min=0 value=0>"+
-                            "Price : "+flower.price+"$"
                         "</label>"
+                        "Price : "+flower.price+"$"
                     })
                 </script>
             </div>
