@@ -23,8 +23,8 @@ router.get('/cart', ensureAuthenticated, controllers.renderCart)
 router.post('/cart', ensureAuthenticated, controllers.deleteCommand)
 
 //Payment page
-router.get('/payment', controllers.renderPayment)
-router.post('/payment', controllers.resolveCommand)
+router.get('/payment', ensureAuthenticated,controllers.renderPayment)
+router.post('/payment', ensureAuthenticated,controllers.resolveCommand)
 
 //About page
 router.get('/about', controllers.renderAbout)

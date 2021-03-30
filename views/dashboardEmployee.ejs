@@ -8,7 +8,7 @@
 
 <div id="product">
     <script>
-        addProduct = (idBouquet) => {
+        buildCustomBouquet = (idBouquet) => {
             $.post("/dashboardEmployee", {idBouquet: idBouquet}, () => {})
             swal({
                 text: 'Command Resolved',
@@ -34,14 +34,13 @@
                 bouquet.description +
                 "</p>" +
                 "<p>" + "Price: "+ bouquet.price + "$" + "</p>" +
+                "<button type=submit class=add-command value="+bouquet.idBouquet+" onclick=buildCustomBouquet(this.value)>Make the bouquet</button>"+
                 "</div>"+
                 "</div>" +
                 "</div>"
         })
     </script>
 </div>
-
-<a href="/users/resolve" class="btn btn-primary">Resolve the command</a>
 
 <script>
     $(document).ready(function()

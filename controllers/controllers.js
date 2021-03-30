@@ -21,7 +21,7 @@ exports.renderDashboard = (req, res) => {
     else {
         database.connect((err) => {
             if(err) throw err
-            database.query(`SELECT * FROM bouquets, ordered WHERE isCompleted=false AND status=true`, (err, rows, fields) => {
+            database.query(`SELECT * FROM bouquets, ordered WHERE isCompleted=0 AND status=1 AND ordered.idBouquet=bouquets.idBouquet ORDER BY ordered.date`, (err, rows, fields) => {
                 res.render('../views/dashboardEmployee', {
                     name: req.user.name,
                     bouquets: rows
@@ -180,7 +180,7 @@ exports.addCommand = (req, res) => {
 exports.resolveCommand = (req, res) => {
     database.connect(err => {
         if(err) throw err
-        database.query(`UPDATE ordered SET status=true WHERE idUser=${req.user.id}`, )
+        database.query(`UPDATE ordered SET status=1 WHERE idUser=${req.user.id}`, )
     })
 }
 
@@ -209,6 +209,6 @@ exports.addCustomBouquet = (req, res) => {
 exports.resolveCustom = (req, res) => {
     database.connect((err)=> {
         if(err) throw err
-        database.query(`UPDATE bouquets SET isCompleted=true WHERE idBouquet=${req.body.idBouquet}`)
+        database.query(`UPDATE bouquets SET isCompleted=1 WHERE idBouquet=${req.body.idBouquet}`)
     })
 }
