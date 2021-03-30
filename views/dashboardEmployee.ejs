@@ -11,7 +11,7 @@
         buildCustomBouquet = (idBouquet) => {
             $.post("/dashboardEmployee", {idBouquet: idBouquet}, () => {})
             swal({
-                text: 'Command Resolved',
+                text: 'The making of the bouquet has been confirmed',
                 icon: 'success',
                 button: 'Ok'
             }).then(function(){

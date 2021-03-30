@@ -10,7 +10,16 @@ exports.home = (req, res) => {
 }
 
 exports.renderOrdered = (req, res) => {
-    res.render('../views/ordered')
+    database.connect((err) => {
+        if(err) throw err
+        database.query(`SELECT * FROM bouquets, ordered WHERE ordered.status=1 AND ordered.idUser=${req.user.id} AND bouquets.idBouquet=ordered.idBouquet`, (err, rows, fields) => {
+            if(err) throw err
+            console.log("Retrieve all orders for one user successful")
+            res.render('../views/ordered', {
+                orders: rows
+            })
+        })
+    })
 }
 
 exports.renderDashboard = (req, res) => {
@@ -22,6 +31,8 @@ exports.renderDashboard = (req, res) => {
         database.connect((err) => {
             if(err) throw err
             database.query(`SELECT * FROM bouquets, ordered WHERE isCompleted=0 AND status=1 AND ordered.idBouquet=bouquets.idBouquet ORDER BY ordered.date`, (err, rows, fields) => {
+                if(err) throw err
+                console.log("Retrieve all custom bouquet that haven't been completed successful")
                 res.render('../views/dashboardEmployee', {
                     name: req.user.name,
                     bouquets: rows
@@ -40,6 +51,7 @@ exports.renderCustomize = (req, res) => {
         if(err) throw err
         database.query(`SELECT * FROM flowers`, (err, rows, fields) => {
             if(err) throw err
+            console.log("Retrieve all flower successful")
             res.render('../views/customize', {
                 flowers: rows
             })
@@ -56,6 +68,7 @@ exports.renderCart = (req, res) => {
         if(err) throw err
         database.query(`SELECT * FROM bouquets, ordered WHERE ordered.idUser=${req.user.id} AND bouquets.idBouquet=ordered.idBouquet`, (err, rows, fields) => {
             if(err) throw err
+            console.log("Retrieve all bouquet that have been ordered by the current user successful")
             res.render('../views/cart', {
                 cart: rows
             })
@@ -68,6 +81,7 @@ exports.renderPurchase = (req, res) => {
         if(err) throw err
         database.query("SELECT * FROM bouquets WHERE isPredefined="+true, (err, rows, fields) => {
             if(err) throw err
+            console.log("Retrieve only predefined bouquet successful")
             res.render('../views/purchase', {
                 bouquets: rows
             })
@@ -173,21 +187,28 @@ exports.addCommand = (req, res) => {
         if(err) throw err
         let idBouquet = req.body.idBouquet
         let idUser = req.user.id
-        database.query(`INSERT INTO ordered (idBouquet, idUser, date, status) VALUES (${idBouquet},${idUser}, CURDATE(), false)`)
+        database.query(`INSERT INTO ordered (idBouquet, idUser, date, status) VALUES (${idBouquet},${idUser}, CURDATE(), false)`, (err) => {
+            if(err) throw err
+            console.log("Insertion into table ordered successful")
+        })
     })
 }
 
 exports.resolveCommand = (req, res) => {
     database.connect(err => {
         if(err) throw err
-        database.query(`UPDATE ordered SET status=1 WHERE idUser=${req.user.id}`, )
+        database.query(`UPDATE ordered SET status=1 WHERE idUser=${req.user.id}`, (err) => {
+            console.log('Update table ordered when user validate his command successful')
+        })
     })
 }
 
 exports.deleteCommand = (req, res) => {
     database.connect ((err) => {
         if(err) throw err
-        database.query(`DELETE FROM ordered WHERE idUser=${req.user.id} AND idBouquet=${req.body.idBouquet}`)
+        database.query(`DELETE FROM ordered WHERE idUser=${req.user.id} AND idBouquet=${req.body.idBouquet}`, (err) => {
+            console.log('Command deleted successfully')
+        })
     })
 }
 
@@ -198,9 +219,14 @@ exports.addCustomBouquet = (req, res) => {
         if(err) throw err
         database.query(`INSERT INTO bouquets (name, image, description, price, isPredefined, isCompleted) VALUES ('${name}', '/images/custom.jpg', '${description}', ${price}, false, false)`, (err, result) => {
             if(err) throw err
+            console.log('Insert custom bouquet successful')
             database.query(`SELECT idBouquet FROM bouquets WHERE name='${name}' AND description='${description}' AND price=${price}`, (err, rows, fields) => {
                 if(err) throw err
-                database.query(`INSERT INTO ordered (idUser, idBouquet, date, status) VALUE (${req.user.id}, ${rows[0].idBouquet}, CURDATE(), false)`)
+                console.log('Retrieve the id of the custom bouquet successful')
+                database.query(`INSERT INTO ordered (idUser, idBouquet, date, status) VALUE (${req.user.id}, ${rows[0].idBouquet}, CURDATE(), false)`, (err) => {
+                    if(err) throw err
+                    console.log('Insert the order of custom bouquet successful')
+                })
             })
         })
     })
@@ -209,6 +235,8 @@ exports.addCustomBouquet = (req, res) => {
 exports.resolveCustom = (req, res) => {
     database.connect((err)=> {
         if(err) throw err
-        database.query(`UPDATE bouquets SET isCompleted=1 WHERE idBouquet=${req.body.idBouquet}`)
+        database.query(`UPDATE bouquets SET isCompleted=1 WHERE idBouquet=${req.body.idBouquet}`, (err) => {
+            console.log('Resolve one custom bouquet successful')
+        })
     })
 }

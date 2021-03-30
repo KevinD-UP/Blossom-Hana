@@ -1,0 +1,98 @@
+<script>
+    const data = <%- JSON.stringify(orders) %>;
+</script>
+
+<nav class="navbar">
+    <div id="trapezoid">
+        <a class="sub-home" href="/dashboard">Dashboard</a>
+        <a href="/dashboard" class="expandHome">Home</a>
+        <div class="subnav">
+            <button class="subnavbtn">Clients<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <div id="subnav-trapezoid">
+                    <a href="/purchase">Purchase</a>
+                    <a href="/cart">Cart</a>
+                    <a href="/ordered">My orders</a>
+                </div>
+            </div>
+        </div>
+        <a href="/about">About</a>
+        <a href="/users/logout">Logout</a>
+    </div>
+</nav>
+
+
+<h1 class="mt-4">My orders</h1>
+
+<br>
+<br>
+
+<div id="product">
+    <script>
+        data.forEach((bouquet) => {
+            document.getElementById("product").innerHTML +=
+                "<div id=product"+bouquet.idBouquet+">"+
+                "<div class=predefined-article>"+
+                "<div class=predefined-article-img>"+
+                "<img src="+bouquet.image+" alt=flower>"+
+                "</div>"+
+                "<div class=info>"+
+                "<h1 class=article-name>"+
+                bouquet.name +
+                "</h1>" +
+                "<p class=article-description>" +
+                bouquet.description +
+                "</p>" +
+                "<p>" + "Price: "+ bouquet.price + "$" + "</p>" +
+                "<br>" +
+                "</div>" +
+                "</div>" +
+                "</div>"
+        })
+    </script>
+</div>
+
+<script>
+    $(document).ready(function()
+    {
+        $(".predefined-article-img").find("img").css("transition", "transform 500ms ease-in-out");
+
+        $(".predefined-article-img").hover(
+            // Handler for mouseenter
+            function()
+            {
+                $(this).find("img").css("transform", "scale(1.2)");
+            },
+            // Handler for mouseleave
+            function()
+            {
+                $(this).find("img").css("transform", "scale(1)");
+            }
+        );
+    });
+
+    $('.expandHome').mouseover(function() {
+        $('.sub-home').css({
+            'display': 'block'
+        });
+    });
+    $('.subnavbtn').mouseover(function() {
+        $('.sub-home').css({
+            'display': 'none'
+        });
+    });
+
+    $('#trapezoid').mouseleave(function() {
+        $('#trapezoid').css({
+            'margin-top': '-53px'
+        });
+        $('.sub-home').css({
+            'display': 'none'
+        });
+    }).mouseenter(function() {
+        $('#trapezoid').css({
+            'margin-top': '0px'
+        });
+    });
+</script>
+

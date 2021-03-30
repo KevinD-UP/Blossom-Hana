@@ -27,6 +27,9 @@ router.get('/payment', ensureAuthenticated,controllers.renderPayment)
 router.post('/payment', ensureAuthenticated,controllers.resolveCommand)
 
 //About page
-router.get('/about', controllers.renderAbout)
+router.get('/about', ensureAuthenticated,controllers.renderAbout)
+
+//Orders page
+router.get('/ordered', ensureAuthenticated,controllers.renderOrdered)
 
 module.exports = router;
