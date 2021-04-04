@@ -66,7 +66,7 @@ exports.renderAbout = (req, res) => {
 exports.renderCart = (req, res) => {
     database.connect(err => {
         if(err) throw err
-        database.query(`SELECT * FROM bouquets, ordered WHERE ordered.idUser=${req.user.id} AND bouquets.idBouquet=ordered.idBouquet`, (err, rows, fields) => {
+        database.query(`SELECT * FROM bouquets, ordered WHERE ordered.idUser=${req.user.id} AND bouquets.idBouquet=ordered.idBouquet AND ordered.status=0`, (err, rows, fields) => {
             if(err) throw err
             console.log("Retrieve all bouquet that have been ordered by the current user successful")
             res.render('../views/cart', {
@@ -214,13 +214,14 @@ exports.deleteCommand = (req, res) => {
 
 exports.addCustomBouquet = (req, res) => {
 
-   const {name, description, price} = req.body
+    const {name, price} = req.body
+    let description = "Custom bouquet ordered by client's name : " + req.user.name
     database.connect((err)=> {
         if(err) throw err
-        database.query(`INSERT INTO bouquets (name, image, description, price, isPredefined, isCompleted) VALUES ('${name}', '/images/custom.jpg', '${description}', ${price}, false, false)`, (err, result) => {
+        database.query(`INSERT INTO bouquets (name, image, description, price, isPredefined, isCompleted) VALUES ('${name}', '/images/custom.jpg', "${description}", ${price}, false, false)`, (err, result) => {
             if(err) throw err
             console.log('Insert custom bouquet successful')
-            database.query(`SELECT idBouquet FROM bouquets WHERE name='${name}' AND description='${description}' AND price=${price}`, (err, rows, fields) => {
+            database.query(`SELECT idBouquet FROM bouquets WHERE name='${name}' AND description="${description}" AND price=${price}`, (err, rows, fields) => {
                 if(err) throw err
                 console.log('Retrieve the id of the custom bouquet successful')
                 database.query(`INSERT INTO ordered (idUser, idBouquet, date, status) VALUE (${req.user.id}, ${rows[0].idBouquet}, CURDATE(), false)`, (err) => {

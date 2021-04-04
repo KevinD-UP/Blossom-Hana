@@ -2,14 +2,15 @@
     const customBouquet = <%- JSON.stringify(bouquets)%> //Data containing all custom bouquet that haven't been completed.
 </script>
 
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= name %> (Employee)</p>
-
 <nav class="navbar">
     <div id="trapezoid">
         <a href="/users/logout">Logout</a>
     </div>
 </nav>
+
+
+<h1 class="mt-4">Dashboard</h1>
+<p class="lead mb-3">Welcome <%= name %> (Employee)</p>
 
 <!-- list all custom bouquet that haven't been completed start -->
 <div id="product">

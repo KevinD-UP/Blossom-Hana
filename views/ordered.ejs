@@ -1,5 +1,12 @@
 <script>
     const data = <%- JSON.stringify(orders) %>;
+    data.forEach((bouquet) => {
+        if(bouquet.isCompleted === 1){
+            bouquet.isCompleted = "Ready to deliver"
+        }else{
+            bouquet.isCompleted = "In preparation"
+        }
+    })
 </script>
 
 <!-- navbar start -->
@@ -45,6 +52,7 @@
                 bouquet.description +
                 "</p>" +
                 "<p>" + "Price: "+ bouquet.price + "$" + "</p>" +
+                "<p>"+ bouquet.isCompleted +"</p>"
                 "<br>" +
                 "</div>" +
                 "</div>" +

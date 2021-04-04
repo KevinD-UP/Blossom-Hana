@@ -5,8 +5,7 @@
 
     addCustomBouquet = () => { //Add Custom bouquet to table bouquet and ordered
         let name = $("#name").val()
-        let description = "This is one of your custom bouquet" //TODO: description personnalisé
-        $.post("/customize", {name: name, description: description, price: price}, () => {})
+        $.post("/customize", {name: name, price: price}, () => {})
         swal({
             text: 'Your custom bouquet has been added to cart successfully',
             icon: 'success',
@@ -44,7 +43,7 @@
     </strong>
 </p>
 
-<div class="row mt-5">
+<div class="form">
         <div class="form-group">
             <label for="name">Name</label>
             <input
