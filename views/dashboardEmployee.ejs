@@ -46,22 +46,4 @@
 </div>
 <!-- list all custom bouquet that haven't been completed end -->
 
-<script>
-    $(document).ready(function()
-    {
-        $(".predefined-article-img").find("img").css("transition", "transform 500ms ease-in-out");
-
-        $(".predefined-article-img").hover(
-            // Handler for mouseenter
-            function()
-            {
-                $(this).find("img").css("transform", "scale(1.2)");
-            },
-            // Handler for mouseleave
-            function()
-            {
-                $(this).find("img").css("transform", "scale(1)");
-            }
-        );
-    });
-</script>
+<script src="script/script.js"></script>

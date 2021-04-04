@@ -72,38 +72,4 @@
         <button type="submit" class="btn btn-primary btn-block" onClick="addCustomBouquet()">Submit</button>
 </div>
 
-<script>
-    $('.count_flower').blur(function () {
-        price = 0;
-        $('.count_flower').each(function() {
-            price += Number($(this).val()) * data.find((flower)=> {
-                return flower.name === $(this).attr('name')
-        }).price
-            $("#amount").text(price + "$")
-        })
-    })
-
-    $('.expandHome').mouseover(function() {
-        $('.sub-home').css({
-            'display': 'block'
-        });
-    });
-    $('.subnavbtn').mouseover(function() {
-        $('.sub-home').css({
-            'display': 'none'
-        });
-    });
-
-    $('#trapezoid').mouseleave(function() {
-        $('#trapezoid').css({
-            'margin-top': '-53px'
-        });
-        $('.sub-home').css({
-            'display': 'none'
-        });
-    }).mouseenter(function() {
-        $('#trapezoid').css({
-            'margin-top': '0px'
-        });
-    });
-</script>
+<script src="script/script.js"></script>

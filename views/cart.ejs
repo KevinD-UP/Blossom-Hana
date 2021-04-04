@@ -78,47 +78,5 @@
 </div>
 <!-- List of all bouquet of the cart end -->
 
-<script>
-    $(document).ready(function()
-    {
-        $(".predefined-article-img").find("img").css("transition", "transform 500ms ease-in-out");
-
-        $(".predefined-article-img").hover(
-            // Handler for mouseenter
-            function()
-            {
-                $(this).find("img").css("transform", "scale(1.2)");
-            },
-            // Handler for mouseleave
-            function()
-            {
-                $(this).find("img").css("transform", "scale(1)");
-            }
-        );
-    });
-
-    $('.expandHome').mouseover(function() {
-        $('.sub-home').css({
-            'display': 'block'
-        });
-    });
-    $('.subnavbtn').mouseover(function() {
-        $('.sub-home').css({
-            'display': 'none'
-        });
-    });
-
-    $('#trapezoid').mouseleave(function() {
-        $('#trapezoid').css({
-            'margin-top': '-53px'
-        });
-        $('.sub-home').css({
-            'display': 'none'
-        });
-    }).mouseenter(function() {
-        $('#trapezoid').css({
-            'margin-top': '0px'
-        });
-    });
-</script>
+<script src="script/script.js"></script>
 
