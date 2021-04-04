@@ -4,6 +4,7 @@
     <i class="fas fa-user-plus"></i> Register
   </h2>
   <%- include("partials/messages"); %>
+  <br>
   <form action="/users/register" method="POST">
     <div class="form-group">
       <label for="name">Name</label>
@@ -53,6 +54,6 @@
       Register
     </button>
   </form>
-  <p>Have An Account? <a href="/users/login">Login</a></p>
+  <p class="message">Have An Account? <a href="/users/login">Login</a></p>
 </div>
 </div>

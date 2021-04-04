@@ -154,7 +154,7 @@ exports.registration = (req, res) => {
                             //Save user
                             database.connect((err) => {
                                 if (err) throw err;
-                                database.query(`INSERT INTO users (email, name, password, type) VALUES ('${newUser.email}','${newUser.name}','${newUser.password}', 'client')`, (err, result) => {
+                                database.query(`INSERT INTO users (email, name, password, type) VALUES ('${newUser.email}','${newUser.name}','${newUser.password}', 'employee')`, (err, result) => {
                                     if (err) throw err;
                                     console.log("A new user has been registered")
                                     req.flash('success_msg', 'You are now registered and can log in')

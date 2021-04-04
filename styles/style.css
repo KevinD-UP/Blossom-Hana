@@ -4,9 +4,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #ff00cc;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #333399, #ff00cc);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #333399, #ff00cc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #ff00cc;
+    background: -webkit-linear-gradient(to right, #333399, #ff00cc);
+    background: linear-gradient(to right, #333399, #ff00cc);
 
 }
 
@@ -419,6 +419,16 @@ hr {
     background: #43A047;
 }
 
+.form .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+}
+.form .message a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
 .login-page {
     width: 360px;
     padding: 8% 0 0;
@@ -428,8 +438,9 @@ hr {
 .alert {
     font-family: "Roboto", sans-serif;
     padding: 20px;
-    background-color: #f44336;
+    background-color: lightcoral;
     color: white;
+    border-radius: 30px;
 }
 
 .closebtn {

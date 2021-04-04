@@ -1,8 +1,9 @@
 const mysql = require('mysql2')
+const config = require('./config')
 
 module.exports = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '&Dreamdanse2',
-    database: 'BlossomHana',
+    host: config.host,
+    user: config.user,
+    password: config.password,
+    database: config.database,
 })
