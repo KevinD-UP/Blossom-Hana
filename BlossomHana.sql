@@ -12,6 +12,9 @@ SET time_zone = "+00:00";
 -- Base de données : `BlossomHana`
 --
 
+CREATE DATABASE BlossomHana;
+USE BlossomHana;
+
 -- --------------------------------------------------------
 
 --
