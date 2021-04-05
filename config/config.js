@@ -1,6 +1,6 @@
 module.exports = {
-    host: '', //To complete
-    user: '', //To complete
-    password: '', //To complete
+    host: '', //To Complete
+    user: '', //To Complete
+    password: '', //To Complete
     database: 'BlossomHana'
 }

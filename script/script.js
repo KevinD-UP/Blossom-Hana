@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+    //ZOOM EFFECT
     $(".predefined-article-img").find("img").css("transition", "transform 500ms ease-in-out");
 
     $(".predefined-article-img").hover(
@@ -16,6 +17,7 @@ $(document).ready(function()
     );
 });
 
+//NAVBAR ANIMATION
 $('.expandHome').mouseover(function() {
     $('.sub-home').css({
         'display': 'block'
@@ -40,6 +42,7 @@ $('#trapezoid').mouseleave(function() {
     });
 });
 
+//Calculate price of custom bouquet
 $('.count_flower').blur(function () {
     price = 0;
     $('.count_flower').each(function() {
@@ -50,6 +53,7 @@ $('.count_flower').blur(function () {
     })
 })
 
+//CARROUSEL
 let counter = 1;
 setInterval(() => {
     document.getElementById('radio' + counter).checked = true;
