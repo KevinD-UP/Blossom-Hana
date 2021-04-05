@@ -61,6 +61,7 @@
                     data.forEach((flower) => {
                         document.getElementById("flower").innerHTML+=
                         "<img class=flower-image src="+flower.image+">" +
+                        "<br>"    +
                         "<label for="+flower.name+"> "+flower.name +
                             "<input type=number class=count_flower name="+flower.name+" min=0 value=0>"+
                         "</label>"
