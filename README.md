@@ -25,7 +25,7 @@ La console précisera sur quel port l'application est lancé (par défaut port 8
 
 ## Utilisation
 
-Deux utilisateurs sont prédéfinis dans la base de données correspondant au vu de leurs noms à un compte client et un compte employee, dont voici les identifiants et les mots de passes:
+Deux utilisateurs sont prédéfinis dans la base de données correspondant, au vu de leurs noms, à un compte client et un compte employee, dont voici les identifiants et les mots de passes:
 
 * Compte client:
     + Identifiant: client@mail.fr
